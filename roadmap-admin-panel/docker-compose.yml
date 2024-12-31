@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  admin-backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: admin-backend
+    ports:
+      - "5003:5000" # Changed host port to 5003
+    volumes:
+      - ./backend:/app
+    networks:
+      - admin-network
+
+  admin-frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: admin-frontend
+    ports:
+      - "3000:80" # Expose the admin frontend on port 3000
+    networks:
+      - admin-network
+
+networks:
+  admin-network:
+    driver: bridge
